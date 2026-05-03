@@ -7,9 +7,9 @@ export const APP_IDS = {
     STAGING: 29934,
     STAGING_BE: 29934,
     STAGING_ME: 29934,
-    PRODUCTION: 65555,
-    PRODUCTION_BE: 65556,
-    PRODUCTION_ME: 65557,
+    PRODUCTION: 133703, // PROFIT_SCOPE
+    PRODUCTION_BE: 133703,
+    PRODUCTION_ME: 133703,
     PROFIT_SCOPE: 133703,
 };
 
@@ -19,12 +19,8 @@ export const livechat_client_id = '66aa088aad5a414484c1fd1fa8a5ace7';
 export const domain_app_ids = {
     'master.bot-standalone.pages.dev': APP_IDS.TMP_STAGING,
     'staging-dbot.deriv.com': APP_IDS.STAGING,
-    'staging-dbot.deriv.be': APP_IDS.STAGING_BE,
-    'staging-dbot.deriv.me': APP_IDS.STAGING_ME,
-    'dbot.deriv.com': APP_IDS.PRODUCTION,
-    'dbot.deriv.be': APP_IDS.PRODUCTION_BE,
-    'dbot.deriv.me': APP_IDS.PRODUCTION_ME,
     'profitscopex.org': APP_IDS.PROFIT_SCOPE,
+    'www.profitscopex.org': APP_IDS.PROFIT_SCOPE,
 };
 
 export const getCurrentProductionDomain = () =>
