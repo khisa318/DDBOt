@@ -1,4 +1,5 @@
-import { useDevice } from '@deriv-com/ui';
+import { standalone_routes } from '@/components/shared';
+import { DerivLogo, useDevice } from '@deriv-com/ui';
 import './app-logo.scss';
 
 export const AppLogo = () => {
@@ -6,10 +7,6 @@ export const AppLogo = () => {
 
     if (!isDesktop) return null;
     return (
-        <div className='app-header__logo'>
-            <a href='/' className='logo-link'>
-                <span className='logo-text'>🚀 ProfitScopeX</span>
-            </a>
-        </div>
+        <DerivLogo className='app-header__logo' href={standalone_routes.deriv_com} target='_blank' variant='wallets' />
     );
 };
