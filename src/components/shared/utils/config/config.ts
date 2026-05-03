@@ -10,6 +10,7 @@ export const APP_IDS = {
     PRODUCTION: 65555,
     PRODUCTION_BE: 65556,
     PRODUCTION_ME: 65557,
+    PROFIT_SCOPE: 133703,
 };
 
 export const livechat_license_id = 12049137;
@@ -23,6 +24,7 @@ export const domain_app_ids = {
     'dbot.deriv.com': APP_IDS.PRODUCTION,
     'dbot.deriv.be': APP_IDS.PRODUCTION_BE,
     'dbot.deriv.me': APP_IDS.PRODUCTION_ME,
+    'profitscopex.org': APP_IDS.PROFIT_SCOPE,
 };
 
 export const getCurrentProductionDomain = () =>
@@ -172,7 +174,12 @@ export const generateOAuthURL = () => {
             const current_domain = getCurrentProductionDomain();
             if (current_domain) {
                 const domain_suffix = current_domain.replace(/^[^.]+\./, '');
-                original_url.hostname = `oauth.${domain_suffix}`;
+                if (!domain_suffix.includes('deriv')) {
+                    // If it's an external domain, fallback to deriv.com
+                    original_url.hostname = 'oauth.deriv.com';
+                } else {
+                    original_url.hostname = `oauth.${domain_suffix}`;
+                }
             }
         }
     }
