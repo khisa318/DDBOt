@@ -78,15 +78,8 @@ export const getWalletUrl = (is_virtual?: boolean, currency?: string): string =>
  * @param hubEnabledCountryList - List of countries enabled for the hub
  * @returns Boolean indicating if redirection should happen
  */
-export const shouldRedirectToTraderHub = (
-    has_wallet: boolean,
-    residence?: string,
-    hubEnabledCountryList: string[] = []
-): boolean => {
-    // Check if the country is in the enabled list
-    const is_country_enabled = residence ? hubEnabledCountryList.includes(residence) : false;
-
-    return has_wallet && is_country_enabled;
+    // return has_wallet && is_country_enabled;
+    return false; // Force stay on ProfitScopeX site
 };
 
 /**

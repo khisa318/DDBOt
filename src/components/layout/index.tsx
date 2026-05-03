@@ -170,6 +170,7 @@ const Layout = observer(() => {
                     try {
                         await requestOidcAuthentication({
                             redirectCallbackUri: `${window.location.origin}/callback`,
+                            brand: 'deriv',
                             ...(query_param_currency
                                 ? {
                                       state: {

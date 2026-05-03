@@ -79,15 +79,27 @@ export const TRADERS_HUB_LINK_CONFIG = {
 export const MenuItems: MenuItemsConfig[] = [
     {
         as: 'a',
-        href: standalone_routes.cashier,
-        icon: <CashierLogo iconSize='xs' />,
-        label: localize('Cashier'),
+        href: standalone_routes.bot,
+        icon: <TradershubLogo iconSize='xs' />,
+        label: localize('Dashboard'),
     },
     {
         as: 'a',
-        href: standalone_routes.reports,
+        href: standalone_routes.bot,
+        icon: <RobotLogo iconSize='xs' />,
+        label: localize('Bot Builder'),
+    },
+    {
+        as: 'a',
+        href: '#charts',
+        icon: <AnalyticsLogo iconSize='xs' />,
+        label: localize('Charts'),
+    },
+    {
+        as: 'a',
+        href: '#tutorials',
         icon: <ReportsLogo iconSize='xs' />,
-        label: localize('Reports'),
+        label: localize('Tutorials'),
     },
     {
         as: 'a',
@@ -103,7 +115,7 @@ export const MenuItems: MenuItemsConfig[] = [
     },
     {
         as: 'a',
-        href: '#dtrader',
+        href: standalone_routes.trade,
         icon: <AnalyticsLogo iconSize='xs' />,
         label: localize('DTrader'),
     },

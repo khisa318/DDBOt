@@ -7,10 +7,8 @@ import { DesktopLanguagesModal } from '@deriv-com/ui';
 import Livechat from '../../chat/Livechat';
 import AccountLimits from './AccountLimits';
 import ChangeTheme from './ChangeTheme';
-import Deriv from './Deriv';
 import Endpoint from './Endpoint';
 import FullScreen from './FullScreen';
-import HelpCentre from './HelpCentre';
 import LanguageSettings from './LanguageSettings';
 import NetworkStatus from './NetworkStatus';
 import ResponsibleTrading from './ResponsibleTrading';
@@ -31,12 +29,10 @@ const Footer = () => {
         <footer className='app-footer'>
             <FullScreen />
             <LanguageSettings openLanguageSettingModal={openLanguageSettingModal} />
-            <HelpCentre />
             <div className='app-footer__vertical-line' />
             <ChangeTheme />
             <AccountLimits />
             <ResponsibleTrading />
-            <Deriv />
             <Livechat />
             {cs_chat_whatsapp && <WhatsApp />}
             <div className='app-footer__vertical-line' />

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import clsx from 'clsx';
 import { observer } from 'mobx-react-lite';
 import { useFirebaseCountriesConfig } from '@/hooks/firebase/useFirebaseCountriesConfig';
 import { useStore } from '@/hooks/useStore';
@@ -57,17 +58,24 @@ export const MenuItems = observer(() => {
         <>
             {is_logged_in &&
                 (isDesktop
-                    ? filtered_items.map(({ as, href, icon, label }) => (
-                          <MenuItem
-                              as={as}
-                              className='app-header__menu'
-                              href={getModifiedHref(href)}
-                              key={label}
-                              leftComponent={icon}
-                          >
-                              <Text>{localize(label)}</Text>
-                          </MenuItem>
-                      ))
+                    ? filtered_items.map(({ as, href, icon, label }) => {
+                          const is_active = window.location.pathname === new URL(href, window.location.origin).pathname;
+                          return (
+                              <MenuItem
+                                  as={as}
+                                  className={clsx('app-header__menu', {
+                                      'app-header__menu--active': is_active,
+                                  })}
+                                  href={getModifiedHref(href)}
+                                  key={label}
+                                  leftComponent={icon}
+                              >
+                                  <Text size='sm' weight={is_active ? 'bold' : 'normal'}>
+                                      {localize(label)}
+                                  </Text>
+                              </MenuItem>
+                          );
+                      })
                     : // For mobile, show the first available item after filtering
                       filtered_items.length > 0 && (
                           <MenuItem

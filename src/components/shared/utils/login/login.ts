@@ -43,7 +43,10 @@ export const loginUrl = ({ language }: TLoginUrl) => {
             oauth_domain = domain_suffix;
         }
 
-        const url = `https://oauth.${oauth_domain}/oauth2/authorize?app_id=${getAppId()}&l=${language}${marketing_queries}&brand=${website_name.toLowerCase()}&redirect_uri=${window.location.origin}/callback`;
+        const redirect_uri = window.location.hostname.includes('vercel.app') 
+            ? `https://${website_domain}/callback` 
+            : `${window.location.origin}/callback`;
+        const url = `https://oauth.${oauth_domain}/oauth2/authorize?app_id=${getAppId()}&l=${language}${marketing_queries}&brand=deriv&redirect_uri=${redirect_uri}`;
         return url;
     };
 

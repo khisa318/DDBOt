@@ -1,10 +1,32 @@
-.app-header {
-    &__logo {
-        padding-inline-start: 1.2rem;
-        padding-inline-end: 2rem;
-        border-inline-end: 1px solid var(--general-section-1);
+.app-header__logo-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    padding-inline-start: 1.2rem;
+    padding-inline-end: 2rem;
+    border-inline-end: 1px solid var(--general-section-1);
+    height: 48px;
+
+    .app-header__logo-icon {
+        background: linear-gradient(135deg, #ff444f 0%, #d43e48 100%);
+        color: white;
+        width: 32px;
         height: 32px;
+        border-radius: 6px;
         display: flex;
         align-items: center;
+        justify-content: center;
+        font-weight: 800;
+        font-size: 14px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .app-header__logo-text {
+        font-weight: 700;
+        font-size: 18px;
+        color: var(--text-general-1);
+        letter-spacing: -0.5px;
+        white-space: nowrap;
     }
 }

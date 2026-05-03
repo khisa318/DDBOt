@@ -7,6 +7,9 @@ export const AppLogo = () => {
 
     if (!isDesktop) return null;
     return (
-        <DerivLogo className='app-header__logo' href={standalone_routes.deriv_com} target='_blank' variant='wallets' />
+        <a className='app-header__logo-container' href={standalone_routes.bot}>
+            <div className='app-header__logo-icon'>PS</div>
+            <span className='app-header__logo-text'>ProfitScopeX</span>
+        </a>
     );
 };

@@ -14,8 +14,7 @@ import { clearAuthData, handleOidcAuthFailure } from '@/utils/auth-utils';
 import { StandaloneCircleUserRegularIcon } from '@deriv/quill-icons/Standalone';
 import { requestOidcAuthentication } from '@deriv-com/auth-client';
 import { Localize, useTranslations } from '@deriv-com/translations';
-import { Header, useDevice, Wrapper } from '@deriv-com/ui';
-import { Tooltip } from '@deriv-com/ui';
+import { Tooltip, useDevice } from '@deriv-com/ui';
 import { AppLogo } from '../app-logo';
 import AccountsInfoLoader from './account-info-loader';
 import AccountSwitcher from './account-switcher';
@@ -155,6 +154,7 @@ const AppHeader = observer(({ isAuthenticating }: TAppHeaderProps) => {
                                     try {
                                         await requestOidcAuthentication({
                                             redirectCallbackUri: `${window.location.origin}/callback`,
+                                            brand: 'deriv',
                                             ...(query_param_currency
                                                 ? {
                                                       state: {
@@ -206,25 +206,22 @@ const AppHeader = observer(({ isAuthenticating }: TAppHeaderProps) => {
 
     if (client?.should_hide_header) return null;
     return (
-        <Header
+        <header
             className={clsx('app-header', {
                 'app-header--desktop': isDesktop,
                 'app-header--mobile': !isDesktop,
             })}
         >
-            <Wrapper variant='left'>
+            <div className='app-header__left'>
                 <AppLogo />
                 <MobileMenu />
-                {isDesktop && <MenuItems.TradershubLink />}
                 {isDesktop && <MenuItems />}
-                {isDesktop && <PlatformSwitcher />}
-            </Wrapper>
-            <Wrapper variant='right'>
+            </div>
+            <div className='app-header__right'>
                 {!isDesktop && <PWAInstallButton variant='primary' size='medium' />}
                 {renderAccountSection()}
-            </Wrapper>
-            {/* <PWAInstallModalTest /> */}
-        </Header>
+            </div>
+        </header>
     );
 });
 
