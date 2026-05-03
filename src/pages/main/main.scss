@@ -1,6 +1,20 @@
 @use 'components/shared/styles/constants' as *;
 @use 'components/shared/styles/mixins' as *;
 
+.dtrader-wrapper {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.analysis-tool-wrapper,
+.free-bots-wrapper,
+.tutorials-wrapper {
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+}
+
 .run-panel {
     // fix for the RTL issue on tab active line
     .dc-tabs__active-line {

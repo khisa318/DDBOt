@@ -101,4 +101,10 @@ export const MenuItems: MenuItemsConfig[] = [
         icon: <AnalyticsLogo iconSize='xs' />,
         label: localize('Analysis Tool'),
     },
+    {
+        as: 'a',
+        href: '#dtrader',
+        icon: <AnalyticsLogo iconSize='xs' />,
+        label: localize('DTrader'),
+    },
 ];
