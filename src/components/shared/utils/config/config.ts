@@ -29,7 +29,9 @@ export const domain_app_ids = {
 
 export const getCurrentProductionDomain = () =>
     !/^staging\./.test(window.location.hostname) &&
-    Object.keys(domain_app_ids).find(domain => window.location.hostname === domain);
+    Object.keys(domain_app_ids).find(
+        domain => window.location.hostname === domain || window.location.hostname === `www.${domain}`
+    );
 
 export const isProduction = () => {
     const all_domains = Object.keys(domain_app_ids).map(domain => `(www\\.)?${domain.replace('.', '\\.')}`);
@@ -163,7 +165,9 @@ export const generateOAuthURL = () => {
             : !valid_server_urls.includes(JSON.stringify(configured_server_url)))
     ) {
         original_url.hostname = configured_server_url;
-    } else if (original_url.hostname.includes('oauth.deriv.')) {
+    }
+
+    if (original_url.hostname.includes('oauth.deriv.')) {
         // Second priority: Domain-based OAuth URL setting for .me and .be domains
         if (hostname.includes('.deriv.me')) {
             original_url.hostname = 'oauth.deriv.me';
@@ -183,5 +187,11 @@ export const generateOAuthURL = () => {
             }
         }
     }
+
+    const app_id = getAppId();
+    if (app_id) {
+        original_url.searchParams.set('app_id', app_id.toString());
+    }
+
     return original_url.toString() || oauth_url;
 };
