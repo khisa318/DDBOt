@@ -168,20 +168,10 @@ const Layout = observer(() => {
                         sessionStorage.setItem('query_param_currency', query_param_currency);
                     }
                     try {
-                        await requestOidcAuthentication({
-                            redirectCallbackUri: `${window.location.origin}/callback`,
-                            brand: 'deriv',
-                            ...(query_param_currency
-                                ? {
-                                      state: {
-                                          account: query_param_currency,
-                                      },
-                                  }
-                                : {}),
-                        });
+                        window.location.replace(generateOAuthURL());
                     } catch (err) {
                         setIsAuthenticating(false);
-                        handleOidcAuthFailure(err);
+                        console.error('Failed to redirect to OAuth:', err);
                     }
                 }
             } catch (err) {

@@ -152,20 +152,9 @@ const AppHeader = observer(({ isAuthenticating }: TAppHeaderProps) => {
                                 } else {
                                     // Always use OIDC if TMB is not enabled
                                     try {
-                                        await requestOidcAuthentication({
-                                            redirectCallbackUri: `${window.location.origin}/callback`,
-                                            brand: 'deriv',
-                                            ...(query_param_currency
-                                                ? {
-                                                      state: {
-                                                          account: query_param_currency,
-                                                      },
-                                                  }
-                                                : {}),
-                                        });
-                                    } catch (err) {
-                                        handleOidcAuthFailure(err);
                                         window.location.replace(generateOAuthURL());
+                                    } catch (err) {
+                                        console.error('Failed to redirect to OAuth:', err);
                                     }
                                 }
                             } catch (error) {

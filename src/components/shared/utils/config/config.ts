@@ -91,10 +91,11 @@ export const getAppId = () => {
         app_id = config_app_id;
     } else if (isStaging()) {
         app_id = APP_IDS.STAGING;
-    } else if (isTestLink()) {
+    } else if (isLocal()) {
         app_id = APP_IDS.LOCALHOST;
     } else {
-        app_id = domain_app_ids[current_domain as keyof typeof domain_app_ids] ?? APP_IDS.PRODUCTION;
+        // Default to ProfitScopeX if on production or if current_domain is found
+        app_id = domain_app_ids[current_domain as keyof typeof domain_app_ids] || APP_IDS.PROFIT_SCOPE;
     }
 
     return app_id;
@@ -147,51 +148,28 @@ export const getDebugServiceWorker = () => {
 };
 
 export const generateOAuthURL = () => {
-    const { getOauthURL } = URLUtils;
-    const oauth_url = getOauthURL();
-    const original_url = new URL(oauth_url);
     const hostname = window.location.hostname;
+    const current_domain = getCurrentProductionDomain();
+    const app_id = getAppId() || APP_IDS.PROFIT_SCOPE;
+    const lang = localStorage.getItem('i18n_language') || 'EN';
 
-    // First priority: Check for configured server URLs (for QA/testing environments)
-    const configured_server_url = (LocalStorageUtils.getValue(LocalStorageConstants.configServerURL) ||
-        localStorage.getItem('config.server_url')) as string;
-
-    const valid_server_urls = ['green.derivws.com', 'red.derivws.com', 'blue.derivws.com', 'canary.derivws.com'];
-
-    if (
-        configured_server_url &&
-        (typeof configured_server_url === 'string'
-            ? !valid_server_urls.includes(configured_server_url)
-            : !valid_server_urls.includes(JSON.stringify(configured_server_url)))
-    ) {
-        original_url.hostname = configured_server_url;
-    }
-
-    if (original_url.hostname.includes('oauth.deriv.')) {
-        // Second priority: Domain-based OAuth URL setting for .me and .be domains
-        if (hostname.includes('.deriv.me')) {
-            original_url.hostname = 'oauth.deriv.me';
-        } else if (hostname.includes('.deriv.be')) {
-            original_url.hostname = 'oauth.deriv.be';
-        } else {
-            // Fallback to original logic for other domains
-            const current_domain = getCurrentProductionDomain();
-            if (current_domain) {
-                const domain_suffix = current_domain.replace(/^[^.]+\./, '');
-                if (!domain_suffix.includes('deriv')) {
-                    // If it's an external domain, fallback to deriv.com
-                    original_url.hostname = 'oauth.deriv.com';
-                } else {
-                    original_url.hostname = `oauth.${domain_suffix}`;
-                }
-            }
+    // Determine OAuth hostname
+    let oauth_hostname = 'oauth.deriv.com';
+    if (hostname.includes('.deriv.me')) {
+        oauth_hostname = 'oauth.deriv.me';
+    } else if (hostname.includes('.deriv.be')) {
+        oauth_hostname = 'oauth.deriv.be';
+    } else if (current_domain) {
+        const domain_suffix = current_domain.replace(/^[^.]+\./, '');
+        if (domain_suffix.includes('deriv')) {
+            oauth_hostname = `oauth.${domain_suffix}`;
         }
     }
 
-    const app_id = getAppId();
-    if (app_id) {
-        original_url.searchParams.set('app_id', app_id.toString());
-    }
+    const url = new URL(`https://${oauth_hostname}/oauth2/authorize`);
+    url.searchParams.set('app_id', app_id.toString());
+    url.searchParams.set('l', lang.toUpperCase());
+    url.searchParams.set('brand', 'deriv');
 
-    return original_url.toString() || oauth_url;
+    return url.toString();
 };
